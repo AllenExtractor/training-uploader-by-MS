@@ -14,6 +14,9 @@ import core as helper
 from utils import progress_bar
 from vars import API_ID, API_HASH, BOT_TOKEN
 
+# Owner Telegram user ID (set OWNER env var in Render dashboard)
+OWNER = int(os.getenv("OWNER", "0"))
+
 # Webhook & port config (set WEBHOOK=True in env to enable web server)
 WEBHOOK = os.getenv("WEBHOOK", "True").lower() in ("true", "1", "yes")
 PORT = int(os.getenv("PORT", 8000))
@@ -117,10 +120,11 @@ async def main():
     # Start the bot
     await start_bot()
 
-    # Keep the program running
+    # Keep the program running using pyrogram's idle()
+    # idle() properly handles SIGINT/SIGTERM and keeps the dispatcher alive
     try:
-        while True:
-            await asyncio.sleep(3600)  # Run forever, or until interrupted
+        from pyrogram.idle import idle
+        await idle()
     except (KeyboardInterrupt, SystemExit):
         pass
     finally:
@@ -422,7 +426,7 @@ async def txt_handler(bot: Client, m: Message):
 # Advance
 
 @bot.on_message(filters.command(["Bear"]) )
-async def txt_handler(bot: Client, m: Message):
+async def bear_handler(bot: Client, m: Message):
     editable = await m.reply_text(f"**🔹Hi I am Poweful Lovely TXT Downloader📥 Bot.**\n🔹**Send me the TXT file and Just wait and Watch🥂.**")
     input: Message = await bot.listen(editable.chat.id)
     x = await input.download()
@@ -676,48 +680,46 @@ async def txt_handler(bot: Client, m: Message):
 # ─────────────────────────────────────────────────────────────────────────────
 
 # ── /owner command ─────────────────────────────────────────────────────────────
-def register_owner_commands(bot):
-    @bot.on_message(filters.command("owner") & filters.private)
-    async def owner_handler(client: Client, msg: Message):
-        db.register_user(msg.from_user.id)
-        owner_text = (
-            "┌──────────────────────────┐\n"
-            "**▪️Owner id Dead. ▪️**\n"
-            "└──────────────────────────┘\n\n"
+@bot.on_message(filters.command("owner") & filters.private)
+async def owner_handler(client: Client, msg: Message):
+    owner_text = (
+        "┌──────────────────────────┐\n"
+        "**▪️Owner id Dead. ▪️**\n"
+        "└──────────────────────────┘\n\n"
+    )
+    await msg.reply_text(owner_text)
+
+
+# ── /changeapi command (owner only) ───────────────────────────────────────
+# Usage: /changeapi https://new-api.example.com/pw
+# Updates both PWAPI1 and PWAPI2 at once (they always use the same API)
+@bot.on_message(filters.command("changeapi") & filters.private)
+async def changeapi_handler(client: Client, msg: Message):
+    global PWAPI1, PWAPI2
+    if msg.from_user.id != OWNER:
+        return await msg.reply_text(
+            "To change your Api in your Repository in this format👇🏻.\n\n"
+            "/changeapi New Api Here\n**https... to .com/pw** tak Only😁.\n\n"
+            "But But But🫡\n"
+            "Sorry you are not my owner😒."
         )
-        await msg.reply_text(owner_text)
 
-
-    # ── /changeapi command (owner only) ───────────────────────────────────────
-    # Usage: /changeapi https://new-api.example.com/pw
-    # Updates both PWAPI1 and PWAPI2 at once (they always use the same API)
-    @bot.on_message(filters.command("changeapi") & filters.private)
-    async def changeapi_handler(client: Client, msg: Message):
-        global PWAPI1, PWAPI2
-        if msg.from_user.id != OWNER:
-            return await msg.reply_text(
-                "To change your Api in your Repository in this format👇🏻.\n\n"
-                "/changeapi New Api Here\n**https... to .com/pw** tak Only😁.\n\n"
-                "But But But🫡\n"
-                "Sorry you are not my owner😒."
-            )
-
-        parts = msg.text.split(None, 1)
-        if len(parts) < 2 or not parts[1].strip():
-            return await msg.reply_text(
-                "Welcome Boss To change your Api in your Repository in this format\n\n"
-                "/changeapi New Api Here\n**https... to .com/pw** tak Only😁.\n\n"
-                "Send me I will change it.✨"
-            )
-
-        new_api = parts[1].strip()
-        PWAPI1 = new_api
-        PWAPI2 = new_api
-        await msg.reply_text(
-            f" **💕𝐀𝐩𝐢 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐂𝐡𝐚𝐧𝐠𝐞𝐝!**\n\n"
-            f"🔗 **𝐍𝐞𝐰 𝐀𝐩𝐢:**\n`{PWAPI1}`\n\n"
-            f"⚡ 𝐂𝐡𝐚𝐧𝐠𝐞𝐝 𝐋𝐢𝐯𝐞 𝐍𝐨𝐰 — 𝐍𝐨 𝐁𝐨𝐭 𝐫𝐞𝐬𝐭𝐚𝐫𝐭 𝐧𝐞𝐞𝐝𝐞𝐝 𝐔𝐬𝐞 𝐍𝐨𝐰🚀."
+    parts = msg.text.split(None, 1)
+    if len(parts) < 2 or not parts[1].strip():
+        return await msg.reply_text(
+            "Welcome Boss To change your Api in your Repository in this format\n\n"
+            "/changeapi New Api Here\n**https... to .com/pw** tak Only😁.\n\n"
+            "Send me I will change it.✨"
         )
+
+    new_api = parts[1].strip()
+    PWAPI1 = new_api
+    PWAPI2 = new_api
+    await msg.reply_text(
+        f" **💕𝐀𝐩𝐢 𝐒𝐮𝐜𝐜𝐞𝐬𝐬𝐟𝐮𝐥𝐥𝐲 𝐂𝐡𝐚𝐧𝐠𝐞𝐝!**\n\n"
+        f"🔗 **𝐍𝐞𝐰 𝐀𝐩𝐢:**\n`{PWAPI1}`\n\n"
+        f"⚡ 𝐂𝐡𝐚𝐧𝐠𝐞𝐝 𝐋𝐢𝐯𝐞 𝐍𝐨𝐰 — 𝐍𝐨 𝐁𝐨𝐭 𝐫𝐞𝐬𝐭𝐚𝐫𝐭 𝐧𝐞𝐞𝐝𝐞𝐝 𝐔𝐬𝐞 𝐍𝐨𝐰🚀."
+    )
 
 #============================================================================================================
 
