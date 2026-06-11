@@ -60,6 +60,20 @@ async def web_server():
     web_app.add_routes(routes)
     return web_app
 
+
+def _is_port_in_use(port: int) -> bool:
+    """Check if a TCP port is already bound on 0.0.0.0 or 127.0.0.1."""
+    import socket
+    for host in ("0.0.0.0", "127.0.0.1"):
+        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+            s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            try:
+                s.bind((host, port))
+            except OSError:
+                return True
+    return False
+
+
 async def start_bot():
     await bot.start()
     print("Bot is up and running")
@@ -68,13 +82,37 @@ async def stop_bot():
     await bot.stop()
 
 async def main():
+    app_runner = None
+
     if WEBHOOK:
-        # Start the web server
-        app_runner = web.AppRunner(await web_server())
-        await app_runner.setup()
-        site = web.TCPSite(app_runner, "0.0.0.0", PORT)
-        await site.start()
-        print(f"Web server started on port {PORT}")
+        # ── Port conflict guard ──────────────────────────────────────────────
+        # Render injects PORT=10000; gunicorn (if used) already owns that port.
+        # We try PORT first, then PORT+1, then a fixed fallback (8080).
+        candidate_ports = [PORT, PORT + 1, 8080, 8443]
+        chosen_port = None
+        for p in candidate_ports:
+            if not _is_port_in_use(p):
+                chosen_port = p
+                break
+
+        if chosen_port is None:
+            print(
+                f"[WARN] All candidate ports {candidate_ports} are in use. "
+                "Skipping aiohttp web server — bot-only mode."
+            )
+        else:
+            try:
+                app_runner = web.AppRunner(await web_server())
+                await app_runner.setup()
+                site = web.TCPSite(app_runner, "0.0.0.0", chosen_port)
+                await site.start()
+                print(f"[INFO] Web server started on port {chosen_port}")
+            except OSError as exc:
+                # Last-resort safety net — log and continue without web server
+                print(f"[WARN] Could not bind web server: {exc}. Running bot-only.")
+                if app_runner is not None:
+                    await app_runner.cleanup()
+                    app_runner = None
 
     # Start the bot
     await start_bot()
@@ -84,7 +122,12 @@ async def main():
         while True:
             await asyncio.sleep(3600)  # Run forever, or until interrupted
     except (KeyboardInterrupt, SystemExit):
+        pass
+    finally:
         await stop_bot()
+        if app_runner is not None:
+            await app_runner.cleanup()
+            print("[INFO] Web server shut down cleanly.")
         
 class Data:
     START = (
