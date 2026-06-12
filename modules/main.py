@@ -497,6 +497,60 @@ async def txt_handler(bot: Client, m: Message):
     else:
         thumb == "no"
 
+    # ── Step: Channel ID ──────────────────────────────────────────────────────
+    _ch_editable = await m.reply_text(
+        "**🔹ꜱᴇɴᴅ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ɪᴅ ᴏʀ ꜱᴇɴᴅ /Baby**\n\n"
+        "<blockquote><i>🔹 ᴍᴀᴋᴇ ᴍᴇ ᴀɴ ᴀᴅᴍɪɴ ꜱᴏ ᴛʜᴀᴛ ɪ ᴄᴀɴ ᴜᴘʟᴏᴀᴅ.\n\n"
+        "ᴇxᴀᴍᴘʟᴇ: ᴄʜᴀɴɴᴇʟ ɪᴅ = -1001434XXXXX786</i></blockquote>"
+    )
+    try:
+        _ch_input: Message = await bot.listen(_ch_editable.chat.id, timeout=200)
+        raw_text7 = _ch_input.text
+        await _ch_input.delete(True)
+    except asyncio.TimeoutError:
+        raw_text7 = '/Baby'
+    if "/Baby" in raw_text7:
+        channel_id = m.chat.id
+    else:
+        channel_id = raw_text7
+    await _ch_editable.delete()
+    # ─────────────────────────────────────────────────────────────────────────
+
+    # ── Sticker helpers (downloading / uploading) ─────────────────────────────
+    _dl_sticker = [None]
+    _ul_sticker = [None]
+
+    async def _send_downloading_sticker():
+        for s in (_dl_sticker[0], _ul_sticker[0]):
+            if s:
+                try:
+                    await s.delete()
+                except Exception:
+                    pass
+        _dl_sticker[0] = None
+        _ul_sticker[0] = None
+        s = await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgUAAxkBAAFLw-9qJYmxQuEazhtfMG6b4kJ6XjFX6gACVhUAAhKqiVYhgBCWUT9FcDsE")
+        _dl_sticker[0] = s
+
+    async def _send_uploading_sticker():
+        if _dl_sticker[0]:
+            try:
+                await _dl_sticker[0].delete()
+            except Exception:
+                pass
+            _dl_sticker[0] = None
+        s = await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgUAAxkBAAFLw_pqJYo16P0_7E_vl_tEa8K2vtGbNgACoRYAAu6ciVYnb_DvfxUibTsE")
+        _ul_sticker[0] = s
+
+    async def _delete_uploading_sticker():
+        if _ul_sticker[0]:
+            try:
+                await _ul_sticker[0].delete()
+            except Exception:
+                pass
+            _ul_sticker[0] = None
+    # ─────────────────────────────────────────────────────────────────────────
+
     count =int(raw_text)    
     try:
         for i in range(arg-1, len(links)):
@@ -564,8 +618,11 @@ async def txt_handler(bot: Client, m: Message):
                 
                 if "drive" in url:
                     try:
+                        await _send_downloading_sticker()
                         ka = await helper.download(url, name)
-                        copy = await bot.send_document(chat_id=m.chat.id,document=ka, caption=cc1)
+                        await _send_uploading_sticker()
+                        copy = await bot.send_document(chat_id=channel_id,document=ka, caption=cc1)
+                        await _delete_uploading_sticker()
                         count+=1
                         os.remove(ka)
                         time.sleep(1)
@@ -576,6 +633,7 @@ async def txt_handler(bot: Client, m: Message):
 
                 elif ".pdf" in url:
                     try:
+                        await _send_downloading_sticker()
                         await asyncio.sleep(4)
         # Replace spaces with %20 in the URL
                         url = url.replace(" ", "%20")
@@ -594,7 +652,9 @@ async def txt_handler(bot: Client, m: Message):
 
             # Send the PDF document
                             await asyncio.sleep(4)
-                            copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.pdf', caption=cc1)
+                            await _send_uploading_sticker()
+                            copy = await bot.send_document(chat_id=channel_id, document=f'{name}.pdf', caption=cc1)
+                            await _delete_uploading_sticker()
                             count += 1
 
             # Remove the PDF file after sending
@@ -609,10 +669,13 @@ async def txt_handler(bot: Client, m: Message):
 
                 elif ".pdf" in url:
                     try:
+                        await _send_downloading_sticker()
                         cmd = f'yt-dlp -o "{name}.pdf" "{url}"'
                         download_cmd = f"{cmd} -R 25 --fragment-retries 25"
                         os.system(download_cmd)
-                        copy = await bot.send_document(chat_id=m.chat.id, document=f'{name}.pdf', caption=cc1)
+                        await _send_uploading_sticker()
+                        copy = await bot.send_document(chat_id=channel_id, document=f'{name}.pdf', caption=cc1)
+                        await _delete_uploading_sticker()
                         count += 1
                         os.remove(f'{name}.pdf')
                     except FloodWait as e:
@@ -623,10 +686,13 @@ async def txt_handler(bot: Client, m: Message):
                 else:
                     Show = f"✰🖥️ ᴅᴏᴡɴʟᴏᴀᴅɪɴɢ ᴡᴀɪᴛ..🤖🚀 »\n\n📝 ᴛɪᴛᴇʟ:- `{name}\n\n📹 Qᴜᴀʟɪᴛʏ » {raw_text2}`\n\n**🔗 ᴜʀʟ »** `{url}`\n\n**ʙᴏᴛ ᴍᴀᴅᴇ ʙʏ🧸: ✦ @SmartBoy_ApnaMS ❖"
                     prog = await m.reply_text(Show)
+                    await _send_downloading_sticker()
                     res_file = await helper.download_video(url, cmd, name)
                     filename = res_file
                     await prog.delete(True)
-                    await helper.send_vid(bot, m, cc, filename, thumb, name, prog)
+                    await _send_uploading_sticker()
+                    await helper.send_vid(bot, m, cc, filename, thumb, name, prog, channel_id)
+                    await _delete_uploading_sticker()
                     count += 1
                     time.sleep(1)
 
@@ -636,6 +702,12 @@ async def txt_handler(bot: Client, m: Message):
 
     except Exception as e:
         await m.reply_text(e)
+    # ── All Done sticker ──────────────────────────────────────────────────────
+    try:
+        await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgUAAxkBAAFLxDJqJYzryKgZcWZtin7lqy9ow7RySgACmBgAAvdHgVZGgMRANL1aFzsE")
+    except Exception:
+        pass
+    # ─────────────────────────────────────────────────────────────────────────
     await m.reply_text("**🎉 ᴀʟʟ ᴅᴏɴᴇ! 🎉\n\n✅ ᴛᴏᴅᴀʏ'ꜱ ʙᴀᴛᴄʜ ᴅᴏᴡɴʟᴏᴀᴅ ʜᴀꜱ ʙᴇᴇɴ ᴄᴏᴍᴘʟᴇᴛᴇᴅ ꜱᴜᴄᴄᴇꜱꜱꜰᴜʟʟʏ!\n\nᴀ Qᴜɪᴄᴋ ʀᴇᴀᴄᴛɪᴏɴ ᴡᴏᴜʟᴅ ʙᴇ ɢʀᴇᴀᴛʟʏ ᴀᴘᴘʀᴇᴄɪᴀᴛᴇᴅ.\nꜱᴛᴀʏ ᴄᴏɴɴᴇᴄᴛᴇᴅ ꜰᴏʀ ᴍᴏʀᴇ ᴀᴍᴀᴢɪɴɢ ᴄᴏɴᴛᴇɴᴛ ᴀɴᴅ ᴜᴘᴅᴀᴛᴇꜱ.\n\n\n💠ᴛʜᴀɴᴋ ʏᴏᴜ ꜰᴏʀ ʏᴏᴜʀ ꜱᴜᴘᴘᴏʀᴛ!**")
 
 # Advance
