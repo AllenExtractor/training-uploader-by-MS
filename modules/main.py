@@ -248,7 +248,23 @@ async def start(client: Client, msg: Message):
 
     # ── Send random welcome image ─────────────────────────────────────────────
     try:
-        await client.send_photo(chat_id=msg.chat.id, photo=random.choice(image_list))
+        if msg.chat.id in auth_users:
+            caption = (
+                f"🌚 𝐇𝐞𝐥𝐥𝐨 𝐁𝐚𝐛𝐲!\n\n"
+                f"⬩➤𝐈𝐦 𝐚 𝐀𝐝𝐚𝐯𝐚𝐧𝐜𝐞𝐝 𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐫 𝐁𝐨𝐭\n\n"
+                f"⬩➤𝐈 𝐂𝐚𝐧 𝐄𝐱𝐭𝐫𝐚𝐜𝐭 𝐕𝐢𝐝𝐞𝐨𝐬 & 𝐏𝐃𝐅𝐬 𝐅𝐫𝐨𝐦 𝐘𝐨𝐮𝐫 𝐓𝐞𝐱𝐭 𝐅𝐢𝐥𝐞 𝐚𝐧𝐝 𝐒𝐞𝐧𝐭 𝐭𝐨 𝐲𝐨𝐮!\n\n"
+                f"⬩➤𝐅𝐨𝐫 𝐆𝐮𝐢𝐝𝐞 𝐒𝐞𝐧𝐝 /The08 𝐨𝐫 /Sobi 𝐜𝐨𝐦𝐦𝐚𝐧𝐝 📖\n\n"
+                f"⬩➤𝐌𝐚𝐝𝐞 𝐁𝐲 : @SmartBoy_ApnaMS 🗿."
+            )
+        else:
+            caption = (
+                f"💘 𝐇𝐞𝐥𝐥𝐨 𝐖𝐞𝐥𝐜𝐨𝐦𝐞 **{msg.from_user.first_name}** !\n\n"
+                f"⬩➤𝐈𝐦 𝐚 𝐀𝐝𝐚𝐯𝐚𝐧𝐜𝐞𝐝 𝐔𝐩𝐥𝐨𝐚𝐝𝐞𝐫 𝐁𝐨𝐭\n\n"
+                f"⬩➤ 𝐈 𝐂𝐚𝐧 𝐄𝐱𝐭𝐫𝐚𝐜𝐭 𝐕𝐢𝐝𝐞𝐨𝐬 & 𝐏𝐃𝐅𝐬 𝐅𝐫𝐨𝐦 𝐘𝐨𝐮𝐫 𝐓𝐞𝐱𝐭 𝐅𝐢𝐥𝐞 𝐚𝐧𝐝 𝐒𝐞𝐧𝐭 𝐭𝐨 𝐲𝐨𝐮!\n\n"
+                f"⬩➤🆓𝐘𝐨𝐮 𝐚𝐫𝐞 𝐜𝐮𝐫𝐫𝐞𝐧𝐭𝐥𝐲 𝐮𝐬𝐢𝐧𝐠 𝐭𝐡𝐞 𝕗𝕣𝕖𝕖 𝐯𝐞𝐫𝐬𝐢𝐨𝐧!\n"
+                f"⬩➤𝐖𝐚𝐧𝐭 𝐏𝐫𝐞𝐦𝐢𝐮𝐦? 𝐂𝐨𝐧𝐭𝐚𝐜𝐭: @SmartBoy_ApnaMS 💎\n"
+            )
+        await client.send_photo(chat_id=msg.chat.id, photo=random.choice(image_list), caption=caption)
     except Exception:
         pass
     # ─────────────────────────────────────────────────────────────────────────
