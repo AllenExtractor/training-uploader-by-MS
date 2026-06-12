@@ -454,7 +454,7 @@ async def txt_handler(bot: Client, m: Message):
         arg = 1
 
     # Step 2 — batch name
-    await _send_step_sticker_h("CAACAgUAAxkBAAFLw3JqJYbqO421dDdvNRC197WzZaU8UQACKxwAAgKKUFcQeyGJcriEPDsE")
+    await _send_step_sticker_h("CAACAgUAAxkBAAFMOndqK-IFC70-Oeo97HHD4Zm6iFoYnQAChg8AAv6cqVc2WKeTYejtVzwE")
     await editable.edit("**ᴇɴᴛᴇʀ ʏᴏᴜʀ ʙᴀᴛᴄʜ ɴᴀᴍᴇ ᴏʀ\n\nꜱᴇɴᴅ /UP ꜱᴏ ᴛʜᴀᴛ ɪ ᴡɪʟʟ ᴜꜱᴇ ʏᴏᴜʀ ᴀᴄᴛᴜᴀʟʟ ꜰɪʟᴇ ɴᴀᴍᴇ😉.**")
     input1: Message = await bot.listen(editable.chat.id)
     raw_text0 = input1.text
@@ -465,7 +465,7 @@ async def txt_handler(bot: Client, m: Message):
         b_name = raw_text0
 
     # Step 3 — resolution
-    await _send_step_sticker_h("CAACAgUAAxkBAAFL035qJoEqkKUCHUXobtxlYY91Y0WiEAAChg8AAv6cqVc2WKeTYejtVzsE")
+    await _send_step_sticker_h("CAACAgUAAxkBAAFMOpFqK-M3daLZlZu6iQuVyieiUHvdDgAC4BMAAu3sYFVtPBA29KRzbDwE")
     await editable.edit("**ᴇɴᴛᴇʀ ʀᴇꜱᴏʟᴜᴛɪᴏɴ\nꜰᴏʀ ᴀɴ ᴇxᴀᴍᴘʟᴇ :\n🔹⬩➤ 144\n🔹⬩➤ 250\n🔹⬩➤ 360\n🔹⬩➤ 480\n🔹⬩➤ 720\n🔹⬩➤ 1080\n\nᴀꜱ ʏᴏᴜʀ ᴡɪꜱʜ ʜᴀʙɪʙɪ🤭.**")
     input2: Message = await bot.listen(editable.chat.id)
     raw_text2 = input2.text
@@ -489,7 +489,7 @@ async def txt_handler(bot: Client, m: Message):
             res = "UN"
     
     # Step 4 — credit name
-    await _send_step_sticker_h("CAACAgQAAxkBAAFLw4ZqJYfqOQSmDNv3F0APDsBNFi9mTgACZRYAArIZOFCPCO4ShJZFUTsE")
+    await _send_step_sticker_h("CAACAgIAAxkBAAFMOpNqK-OEEouY2T2dqp8VSY5sY6dduwACKxwAApgdcUrmLxAE_NhI1TwE")
     await editable.edit("**ᴇɴᴛᴇʀ ʏᴏᴜʀ ɴᴀᴍᴇ ᴏʀ\n\nꜱᴇɴᴅ /MS ꜰᴏʀ ᴜꜱɪɴɢ ᴍʏ ɴᴀᴍᴇ🌚.\nꜰᴏʀ ᴀɴ ᴇxᴀᴍᴘʟᴇ :\n@smartBoy_ApnMS **")
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
@@ -500,7 +500,7 @@ async def txt_handler(bot: Client, m: Message):
         CR = raw_text3
         
     # Step 5 — PW Token
-    await _send_step_sticker_h("CAACAgUAAxkBAAFL04JqJoFxBNT-wf8Fbh7ItTbb30RQfAACuxMAAm0o0VQUPILUOWdMDTsE")
+    await _send_step_sticker_h("CAACAgUAAxkBAAFMOpVqK-OeK8CWnShSKaCRb3t66qzs-QACiyIAAr9AqFbycr6vwdJUgjwE")
     await editable.edit("**ᴇɴᴛᴇʀ ʏᴏᴜʀ ᴘᴡ ᴛᴏᴋᴇɴ ꜰᴏʀ 𝐌𝐏𝐃 𝐔𝐑𝐋 ᴏʀ\n\nꜱᴇɴᴅ /VIP ꜰᴏʀ ᴄᴏɴᴛɪɴᴜᴇ ᴡɪᴛʜᴏᴜᴛ ᴛᴏᴋᴇɴ🎀.**")
     input4: Message = await bot.listen(editable.chat.id)
     raw_text4 = input4.text
@@ -511,7 +511,7 @@ async def txt_handler(bot: Client, m: Message):
         MR = raw_text4
         
     # Step 6 — Thumb
-    await _send_step_sticker_h("CAACAgUAAxkBAAFL04tqJoGuPR2v5iIfvhqBfWWRuWfc5gACLwwAAjPkAVVHN4hOSkWeEjsE")
+    await _send_step_sticker_h("CAACAgUAAxkBAAFMOqFqK-PIhePM-y_ZOMRtG9Ul-C0NbQACiB4AAid7sVaDpGzedWE0LzwE")
     await editable.edit("**ɴᴏᴡ ꜱᴇɴᴅ ᴛʜᴇ ᴛʜᴜᴍʙɴᴀɪʟ ᴜʀʟ ᴏʀ**\n\nꜱᴇɴᴅ `no` ꜰᴏʀ ᴡɪᴛʜᴏᴜᴛ ᴛʜɪꜱ\n\n⬩➤ꜰᴏʀ ᴀɴ ᴇxᴀᴍᴘʟᴇ\nʜᴛᴛᴘꜱ://ɢʀᴀᴘʜ.ᴏʀɢ/ꜰɪʟᴇxʏᴢ.ᴊᴘɢ")
     input6 = message = await bot.listen(editable.chat.id)
     raw_text6 = input6.text
@@ -526,7 +526,7 @@ async def txt_handler(bot: Client, m: Message):
         thumb == "no"
 
     # ── Step: Channel ID ──────────────────────────────────────────────────────
-    await _send_step_sticker_h("CAACAgUAAxkBAAFLw51qJYiTAo_1ZboOwLrPxf1hphyRUgACSxYAAsVdiFYZ_nbcdcEp-DsE")
+    await _send_step_sticker_h("CAACAgIAAxkBAAFMOq9qK-Q-N-bm2qyXyVdgpYDuO2txRAACdzIAArwF0EgMDONyCH8JTjwE")
     _ch_editable = await m.reply_text(
         "**🔹ꜱᴇɴᴅ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ɪᴅ ᴏʀ ꜱᴇɴᴅ /Baby**\n\n"
         "<blockquote><i>🔹 ᴍᴀᴋᴇ ᴍᴇ ᴀɴ ᴀᴅᴍɪɴ ꜱᴏ ᴛʜᴀᴛ ɪ ᴄᴀɴ ᴜᴘʟᴏᴀᴅ.\n\n"
@@ -566,7 +566,7 @@ async def txt_handler(bot: Client, m: Message):
                     pass
         _dl_sticker[0] = None
         _ul_sticker[0] = None
-        s = await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgUAAxkBAAFLw-9qJYmxQuEazhtfMG6b4kJ6XjFX6gACVhUAAhKqiVYhgBCWUT9FcDsE")
+        s = await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgUAAxkBAAFMOp1qK-O9aYWDfsAIFur8SWHDH8ws9QACDBgAAnd9sFYvX59eQrs9IjwE")
         _dl_sticker[0] = s
 
     async def _send_uploading_sticker():
@@ -576,7 +576,7 @@ async def txt_handler(bot: Client, m: Message):
             except Exception:
                 pass
             _dl_sticker[0] = None
-        s = await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgUAAxkBAAFLw_pqJYo16P0_7E_vl_tEa8K2vtGbNgACoRYAAu6ciVYnb_DvfxUibTsE")
+        s = await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgUAAxkBAAFMOrxqK-S05QiDeAcEcjoXgqO0eYu0CwACbiAAAiScqFbYqVYGj3K0ijwE")
         _ul_sticker[0] = s
 
     async def _delete_uploading_sticker():
@@ -741,7 +741,7 @@ async def txt_handler(bot: Client, m: Message):
         await m.reply_text(e)
     # ── All Done sticker ──────────────────────────────────────────────────────
     try:
-        await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgUAAxkBAAFLxDJqJYzryKgZcWZtin7lqy9ow7RySgACmBgAAvdHgVZGgMRANL1aFzsE")
+        await bot.send_sticker(chat_id=m.chat.id, sticker="CAACAgQAAxkBAAFMOsBqK-URqiWifRvm0xM6ae4ysh3UywACsyAAArSbYFLjb1BPuZJx4zwE")
     except Exception:
         pass
     # ─────────────────────────────────────────────────────────────────────────
