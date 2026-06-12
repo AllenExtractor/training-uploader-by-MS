@@ -427,6 +427,22 @@ async def txt_handler(bot: Client, m: Message):
         os.remove(x)
         return
    
+    # ── Step sticker tracker ──────────────────────────────────────────────────
+    _step_sticker_msg = [None]
+
+    async def _send_step_sticker_h(file_id):
+        if _step_sticker_msg[0]:
+            try:
+                await _step_sticker_msg[0].delete()
+            except Exception:
+                pass
+            _step_sticker_msg[0] = None
+        s = await bot.send_sticker(chat_id=m.chat.id, sticker=file_id)
+        _step_sticker_msg[0] = s
+    # ─────────────────────────────────────────────────────────────────────────
+
+    # Step 1 — from where
+    await _send_step_sticker_h("CAACAgQAAxkBAAFLw2xqJYZ7bpEUbaLHEV_yYaduL1twAwACVRUAAnOxYFCUkyy9GwdwoTsE")
     await editable.edit(f"ᴛᴏᴛᴀʟ ʟɪɴᴋꜱ ᴅᴇᴛᴇᴄᴛᴇᴅ: **{len(links)}**\n\nꜱᴇɴᴅ ᴍᴇ ᴡʜᴇʀᴇ ʏᴏᴜ ᴡᴀɴᴛ ᴛᴏ ᴅᴏᴡɴʟᴏᴀᴅ🤔 ꜱᴛᴀʀᴛɪɴɢ ɪꜱ **1**")
     input0: Message = await bot.listen(editable.chat.id)
     raw_text = input0.text
@@ -435,6 +451,9 @@ async def txt_handler(bot: Client, m: Message):
         arg = int(raw_text)
     except:
         arg = 1
+
+    # Step 2 — batch name
+    await _send_step_sticker_h("CAACAgUAAxkBAAFLw3JqJYbqO421dDdvNRC197WzZaU8UQACKxwAAgKKUFcQeyGJcriEPDsE")
     await editable.edit("**ᴇɴᴛᴇʀ ʏᴏᴜʀ ʙᴀᴛᴄʜ ɴᴀᴍᴇ ᴏʀ\n\nꜱᴇɴᴅ /UP ꜱᴏ ᴛʜᴀᴛ ɪ ᴡɪʟʟ ᴜꜱᴇ ʏᴏᴜʀ ᴀᴄᴛᴜᴀʟʟ ꜰɪʟᴇ ɴᴀᴍᴇ😉.**")
     input1: Message = await bot.listen(editable.chat.id)
     raw_text0 = input1.text
@@ -444,6 +463,8 @@ async def txt_handler(bot: Client, m: Message):
     else:
         b_name = raw_text0
 
+    # Step 3 — resolution
+    await _send_step_sticker_h("CAACAgUAAxkBAAFL035qJoEqkKUCHUXobtxlYY91Y0WiEAAChg8AAv6cqVc2WKeTYejtVzsE")
     await editable.edit("**ᴇɴᴛᴇʀ ʀᴇꜱᴏʟᴜᴛɪᴏɴ\nꜰᴏʀ ᴀɴ ᴇxᴀᴍᴘʟᴇ :\n🔹⬩➤ 144\n🔹⬩➤ 250\n🔹⬩➤ 360\n🔹⬩➤ 480\n🔹⬩➤ 720\n🔹⬩➤ 1080\n\nᴀꜱ ʏᴏᴜʀ ᴡɪꜱʜ ʜᴀʙɪʙɪ🤭.**")
     input2: Message = await bot.listen(editable.chat.id)
     raw_text2 = input2.text
@@ -466,6 +487,8 @@ async def txt_handler(bot: Client, m: Message):
     except Exception:
             res = "UN"
     
+    # Step 4 — credit name
+    await _send_step_sticker_h("CAACAgQAAxkBAAFLw4ZqJYfqOQSmDNv3F0APDsBNFi9mTgACZRYAArIZOFCPCO4ShJZFUTsE")
     await editable.edit("**ᴇɴᴛᴇʀ ʏᴏᴜʀ ɴᴀᴍᴇ ᴏʀ\n\nꜱᴇɴᴅ /MS ꜰᴏʀ ᴜꜱɪɴɢ ᴍʏ ɴᴀᴍᴇ🌚.\nꜰᴏʀ ᴀɴ ᴇxᴀᴍᴘʟᴇ :\n@smartBoy_ApnMS **")
     input3: Message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
@@ -475,6 +498,8 @@ async def txt_handler(bot: Client, m: Message):
     else:
         CR = raw_text3
         
+    # Step 5 — PW Token
+    await _send_step_sticker_h("CAACAgUAAxkBAAFL04JqJoFxBNT-wf8Fbh7ItTbb30RQfAACuxMAAm0o0VQUPILUOWdMDTsE")
     await editable.edit("**ᴇɴᴛᴇʀ ʏᴏᴜʀ ᴘᴡ ᴛᴏᴋᴇɴ ꜰᴏʀ 𝐌𝐏𝐃 𝐔𝐑𝐋 ᴏʀ\n\nꜱᴇɴᴅ /VIP ꜰᴏʀ ᴄᴏɴᴛɪɴᴜᴇ ᴡɪᴛʜᴏᴜᴛ ᴛᴏᴋᴇɴ🎀.**")
     input4: Message = await bot.listen(editable.chat.id)
     raw_text4 = input4.text
@@ -484,6 +509,8 @@ async def txt_handler(bot: Client, m: Message):
     else:
         MR = raw_text4
         
+    # Step 6 — Thumb
+    await _send_step_sticker_h("CAACAgUAAxkBAAFL04tqJoGuPR2v5iIfvhqBfWWRuWfc5gACLwwAAjPkAVVHN4hOSkWeEjsE")
     await editable.edit("**ɴᴏᴡ ꜱᴇɴᴅ ᴛʜᴇ ᴛʜᴜᴍʙɴᴀɪʟ ᴜʀʟ ᴏʀ**\n\nꜱᴇɴᴅ `no` ꜰᴏʀ ᴡɪᴛʜᴏᴜᴛ ᴛʜɪꜱ\n\n⬩➤ꜰᴏʀ ᴀɴ ᴇxᴀᴍᴘʟᴇ\nʜᴛᴛᴘꜱ://ɢʀᴀᴘʜ.ᴏʀɢ/ꜰɪʟᴇxʏᴢ.ᴊᴘɢ")
     input6 = message = await bot.listen(editable.chat.id)
     raw_text6 = input6.text
@@ -498,6 +525,7 @@ async def txt_handler(bot: Client, m: Message):
         thumb == "no"
 
     # ── Step: Channel ID ──────────────────────────────────────────────────────
+    await _send_step_sticker_h("CAACAgUAAxkBAAFLw51qJYiTAo_1ZboOwLrPxf1hphyRUgACSxYAAsVdiFYZ_nbcdcEp-DsE")
     _ch_editable = await m.reply_text(
         "**🔹ꜱᴇɴᴅ ᴛʜᴇ ᴄʜᴀɴɴᴇʟ ɪᴅ ᴏʀ ꜱᴇɴᴅ /Baby**\n\n"
         "<blockquote><i>🔹 ᴍᴀᴋᴇ ᴍᴇ ᴀɴ ᴀᴅᴍɪɴ ꜱᴏ ᴛʜᴀᴛ ɪ ᴄᴀɴ ᴜᴘʟᴏᴀᴅ.\n\n"
@@ -514,6 +542,14 @@ async def txt_handler(bot: Client, m: Message):
     else:
         channel_id = raw_text7
     await _ch_editable.delete()
+
+    # Delete last step sticker
+    if _step_sticker_msg[0]:
+        try:
+            await _step_sticker_msg[0].delete()
+        except Exception:
+            pass
+        _step_sticker_msg[0] = None
     # ─────────────────────────────────────────────────────────────────────────
 
     # ── Sticker helpers (downloading / uploading) ─────────────────────────────
